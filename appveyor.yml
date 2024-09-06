@@ -3,7 +3,7 @@ skip_tags: true
 image: Visual Studio 2022
 branches:
   only:
-  - master
+  - main
 configuration: Release
 platform: Any CPU
 install:
