@@ -18,8 +18,6 @@ install:
     msbuild -noLogo -ver
     where dotnet
     dotnet msbuild -ver
-    where ilasm
-    where ildasm
 build_script:
 - cmd: |
     dotnet build -tl:off -v n
