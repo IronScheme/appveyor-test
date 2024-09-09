@@ -4,8 +4,7 @@
     <TargetFramework>net2.0</TargetFramework>
     <LangVersion>12.0</LangVersion>
     <OutputType>Exe</OutputType>
-    <SDK40ToolsPath Condition="$(SDK40ToolsPath) == ''">C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\</SDK40ToolsPath>
-    <SDK35ToolsPath Condition="$(SDK35ToolsPath) == ''">C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\</SDK35ToolsPath>
+
     
   </PropertyGroup>
 
