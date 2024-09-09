@@ -5,7 +5,6 @@ branches:
   only:
   - main
 configuration: Release
-platform: Any CPU
 install:
 - cmd: |
     cd %APPVEYOR_BUILD_FOLDER%
