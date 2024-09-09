@@ -6,7 +6,7 @@
     <OutputType>Exe</OutputType>
     <SDK40ToolsPath Condition="$(SDK40ToolsPath) == ''">C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\</SDK40ToolsPath>
     <SDK35ToolsPath Condition="$(SDK35ToolsPath) == ''">C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\</SDK35ToolsPath>
-    <MSBuildFrameworkToolsRoot Condition="'$(MSBuildFrameworkToolsRoot)' == ''">$(Registry:HKEY_LOCAL_MACHINE\Software\Microsoft\.NETFramework@InstallRoot)</MSBuildFrameworkToolsRoot>
+    <MSBuildFrameworkToolsRoot Condition="'$(MSBuildFrameworkToolsRoot)' == ''">C:\Windows\Microsoft.NET\Framework\</MSBuildFrameworkToolsRoot>
   </PropertyGroup>
 
   <Target Name="Check" BeforeTargets="CoreCompile" >
