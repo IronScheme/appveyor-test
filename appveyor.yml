@@ -19,6 +19,7 @@ install:
     where dotnet
     dotnet msbuild -ver
     dir %LOCALAPPDATA%\Microsoft\VisualStudio\17.0*
+    type %LOCALAPPDATA%\Microsoft\VisualStudio\17.0_1d9074a0\sdk.txt
     echo UsePreviews=True > %LOCALAPPDATA%\Microsoft\VisualStudio\17.0_1d9074a0\sdk.txt
     type %LOCALAPPDATA%\Microsoft\VisualStudio\17.0_1d9074a0\sdk.txt
 build_script:
@@ -26,4 +27,4 @@ build_script:
     dotnet restore
     dotnet build -tl:off -v n
     dotnet msbuild -tl:off -v:n
-    msbuild
+    msbuild -restore
