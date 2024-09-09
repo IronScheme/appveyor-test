@@ -20,3 +20,8 @@ install:
     where dotnet
     dotnet msbuild -ver
     dotnet --info
+build_script:
+- cmd: |
+    dotnet build -tl:off -v n
+    dotnet msbuild -tl:off -v:n
+    msbuild
