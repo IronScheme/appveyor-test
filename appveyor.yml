@@ -21,6 +21,7 @@ install:
     dir "C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\"
 build_script:
 - cmd: |
+    dotnet restore
     dotnet build -tl:off -v n
     dotnet msbuild -tl:off -v:n
     msbuild
