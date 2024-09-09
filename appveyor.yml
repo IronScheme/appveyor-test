@@ -19,7 +19,6 @@ install:
     msbuild -noLogo -ver
     where dotnet
     dotnet msbuild -ver
-    dotnet --info
 build_script:
 - cmd: |
     dotnet build -tl:off -v n
