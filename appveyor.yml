@@ -19,6 +19,7 @@ install:
     where dotnet
     dotnet msbuild -ver
     for /d %%d in (%LOCALAPPDATA%\Microsoft\VisualStudio\17.0*) do echo UsePreviews=True > %%d\sdk.txt
+    for /d %%d in (%LOCALAPPDATA%\Microsoft\VisualStudio\17.0*) do type %%d\sdk.txt
 build_script:
 - cmd: |
     dotnet restore
