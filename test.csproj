@@ -1,30 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net2.0</TargetFrameworks>
+    <TargetFramework>net2.0</TargetFramework>
     <PlatformTarget>anycpu</PlatformTarget>
     <LangVersion>12.0</LangVersion>
     <OutputType>Exe</OutputType>
-<!--    
-    <SDK40ToolsPath Condition="$(SDK40ToolsPath) == ''">C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\</SDK40ToolsPath>
-    <SDK35ToolsPath Condition="$(SDK35ToolsPath) == ''">C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\</SDK35ToolsPath>
-    <MSBuildFrameworkToolsRoot Condition="'$(MSBuildFrameworkToolsRoot)' == ''">C:\Windows\Microsoft.NET\Framework\</MSBuildFrameworkToolsRoot> 
--->
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(MSBuildRuntimeType) == 'Core'">
+    <SystemRoot Condition="$(SystemRoot) == ''">C:\WINDOWS</SystemRoot>
+    <SDK40ToolsPath Condition="$(SDK40ToolsPath) == ''">$([MSBuild]::ValueOrDefault($([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SDKs\NETFXSDK\4.8.1\WinSDK-NetFx40Tools-x86', 'InstallationFolder', null, RegistryView.Registry32)), $([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SDKs\NETFXSDK\4.8\WinSDK-NetFx40Tools-x86', 'InstallationFolder', null, RegistryView.Registry32))))</SDK40ToolsPath>
+    <SDK35ToolsPath Condition="$(SDK35ToolsPath) == ''">$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SDKs\Windows\v8.0A\WinSDK-NetFx35Tools-x86', 'InstallationFolder', null, RegistryView.Registry32))</SDK35ToolsPath>
+    <MSBuildFrameworkToolsRoot Condition="'$(MSBuildFrameworkToolsRoot)' == ''">$(SystemRoot)\Microsoft.NET\Framework\</MSBuildFrameworkToolsRoot>
   </PropertyGroup>
 
   <Target Name="Check" BeforeTargets="CoreCompile" >
-      <Message Text="TargetFrameworkSDKToolsDirectory: $(TargetFrameworkSDKToolsDirectory)"></Message>
-      <Message Text="TargetFrameworkSDKDirectory: $(TargetFrameworkSDKDirectory)"></Message>
-      <Message Text="FrameworkSDKDir: $(FrameworkSDKDir)"></Message>
-      <Message Text="TargetFrameworkDirectory: $(TargetFrameworkDirectory)"></Message>
-      <Message Text="TargetedFrameworkDir: $(TargetedFrameworkDir)"></Message>
-      <Message Text="FrameworkDir: $(FrameworkDir)"></Message>
-      <Message Text="TargetFramework: $(TargetFramework)"></Message>
-      <Message Text="TargetFrameworkVersion: $(TargetFrameworkVersion)"></Message>
-      
-      <Message Text="MSBuildFrameworkToolsRoot: $(MSBuildFrameworkToolsRoot)"></Message>
-      <Message Text="MSBuildRuntimeType: $(MSBuildRuntimeType)"></Message>
-      
+      <Message Importance="High" Text="TargetFrameworkSDKToolsDirectory: $(TargetFrameworkSDKToolsDirectory)"></Message>
+      <Message Importance="High" Text="TargetedFrameworkDir: $(TargetedFrameworkDir)"></Message>
+      <Message Importance="High" Text="TargetFrameworkDirectory: $(TargetFrameworkDirectory)"></Message>
+      <Message Importance="High" Text="MSBuildRuntimeType: $(MSBuildRuntimeType)"></Message>
   </Target>
 
 </Project>
