@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Rebuild">
 
   <PropertyGroup>
     <TargetFramework>net2.0</TargetFramework>
