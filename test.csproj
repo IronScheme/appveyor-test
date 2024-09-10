@@ -42,12 +42,17 @@
         <ILDAsmPath>"$(TargetDir)ildasm" /LINENUM</ILDAsmPath>
       </PropertyGroup>
 
-      <Message Importance="High" Text="ILAsmPath: $(ILAsmPath)"></Message>
-      <Message Importance="High" Text="ILDAsmPath: $(ILDAsmPath)"></Message>
+      <PropertyGroup>
+          <ILAsmArgs>/out:"$(TargetDir)$(TargetName).dll" "$(TargetDir)$(TargetName).il"</ILAsmArgs>
+          <ILDAsmArgs>/out:"$(TargetDir)$(TargetName).il" "$(TargetPath)"</ILDAsmArgs>
+      </PropertyGroup>
 
-      <Exec Command="$(ILDAsmPath) /out:&quot;$(TargetDir)$(TargetName).il&quot; &quot;$(TargetPath)&quot;" />
-      <Exec Condition="$(UseNetFxIlTools) == True" ContinueOnError="true" Command="$(ILAsmPath) /out:&quot;$(TargetDir)$(TargetName).dll&quot; &quot;$(TargetDir)$(TargetName).il&quot; " />
-      <Exec Command="$(ILAsmPath) /out:&quot;$(TargetDir)$(TargetName).dll&quot; &quot;$(TargetDir)$(TargetName).il&quot; " />
+      <Message Importance="High" Text="ILAsm: $(ILAsmPath) $(ILAsmArgs)"></Message>
+      <Message Importance="High" Text="ILDAsm: $(ILDAsmPath) $(ILDAsmArgs)"></Message>
+
+      <Exec Command="$(ILDAsmPath) $(ILDAsmArgs)"/>
+      <Exec Condition="$(UseNetFxIlTools) == True" ContinueOnError="true" Command="$(ILAsmPath) $(ILAsmArgs)" />
+      <Exec Command="$(ILAsmPath) $(ILAsmArgs)" />
   </Target>
 
 </Project>
