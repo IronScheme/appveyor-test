@@ -20,4 +20,4 @@ build_script:
     dotnet restore
     dotnet build -tl:off 
     dotnet msbuild -restore -tl:off 
-    msbuild /v:m
+    msbuild -restore /v:m
