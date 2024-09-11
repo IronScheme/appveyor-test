@@ -28,7 +28,7 @@
       <Message Importance="High" Text="MSBuildRuntimeType: $(MSBuildRuntimeType)"></Message>
 
       <PropertyGroup>
-        <UseNetFxIlTools Condition="$(UseNetFxIlTools) == '' and Exists('$(TargetFrameworkSDKToolsDirectory)ildasm.exe') and Exists('$(TargetFrameworkDirectory)')">true</UseNetFxIlTools>
+        <UseNetFxIlTools Condition="$(UseNetFxIlTools) != 'false' and Exists('$(TargetFrameworkSDKToolsDirectory)ildasm.exe') and Exists('$(TargetFrameworkDirectory)')">true</UseNetFxIlTools>
         <UseNetFxIlTools Condition="$(UseNetFxIlTools) == ''">false</UseNetFxIlTools>
       </PropertyGroup>
 
