@@ -15,6 +15,7 @@ install:
     choco install dotnet-9.0-sdk --pre -y -r
     for /d %%d in (%LOCALAPPDATA%\Microsoft\VisualStudio\17.0*) do echo UsePreviews=True > %%d\sdk.txt
     for /d %%d in (%LOCALAPPDATA%\Microsoft\VisualStudio\17.0*) do type %%d\sdk.txt
+    dotnet --info
 build_script:
 - cmd: |
     rem dotnet build /tl:off -m:1 -v:m /p:UseNetFxIlTools=true
