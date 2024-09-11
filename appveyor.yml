@@ -17,13 +17,12 @@ install:
     for /d %%d in (%LOCALAPPDATA%\Microsoft\VisualStudio\17.0*) do type %%d\sdk.txt
 build_script:
 - cmd: |
-    dotnet restore
-    dotnet build -restore /tl:off /v:n /p:UseNetFxIlTools=true
-    dotnet msbuild -restore /tl:off /v:n /p:UseNetFxIlTools=true
-    msbuild -restore /v:n /p:UseNetFxIlTools=true
-    dotnet build -restore /tl:off /v:n /p:UseNetFxIlTools=false
-    dotnet msbuild -restore /tl:off /v:n /p:UseNetFxIlTools=false
-    msbuild -restore /v:n /p:UseNetFxIlTools=false
-    dotnet build -restore /tl:off /v:n 
-    dotnet msbuild -restore /tl:off /v:n 
-    msbuild -restore /v:n 
+    dotnet build /tl:off /v:n -m:1 --ucr /p:UseNetFxIlTools=true
+    dotnet msbuild -restore /tl:off /v:n -m:1 /p:UseNetFxIlTools=true -p:RuntimeIdentifier=win-x64
+    msbuild -restore /v:n -m:1 /p:UseNetFxIlTools=true -p:RuntimeIdentifier=win-x64
+    dotnet build /tl:off /v:n -m:1 --ucr /p:UseNetFxIlTools=false 
+    dotnet msbuild -restore /tl:off /v:n -m:1 /p:UseNetFxIlTools=false -p:RuntimeIdentifier=win-x64
+    msbuild -restore /v:n -m:1 /p:UseNetFxIlTools=false -p:RuntimeIdentifier=win-x64
+    dotnet build /tl:off /v:n -m:1 --ucr
+    dotnet msbuild -restore /tl:off /v:n -m:1 -p:RuntimeIdentifier=win-x64
+    msbuild -restore /v:n -m:1 -p:RuntimeIdentifier=win-x64
