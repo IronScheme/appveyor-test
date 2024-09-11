@@ -1,9 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Rebuild">
 
   <PropertyGroup>
-    <TargetFramework>net2.0</TargetFramework>
-    <!-- this cant be set else il tools wont be in output dir -->
-    <!--<Platform>AnyCPU</Platform>-->
+    <TargetFrameworks>net2.0;net4.0;net9.0</TargetFrameworks>
     <LangVersion>12.0</LangVersion>
     <OutputType>Exe</OutputType>
     <NoWarn>$(NoWarn);MSB3073</NoWarn>
@@ -17,21 +15,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NETCore.ILAsm" Version="9.0.0-preview.7.24405.7" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.NETCore.ILDAsm" Version="9.0.0-preview.7.24405.7" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NETCore.ILAsm" Version="9.0.0-rc.1.24431.7" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NETCore.ILDAsm" Version="9.0.0-rc.1.24431.7" PrivateAssets="all" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" DependsOnTargets="Restore">
       <Message Importance="High" Text="TargetFrameworkSDKToolsDirectory: $(TargetFrameworkSDKToolsDirectory)"></Message>
       <Message Importance="High" Text="TargetedFrameworkDir: $(TargetedFrameworkDir)"></Message>
-      <Message Importance="High" Text="TargetFrameworkDirectory: $(TargetFrameworkDirectory)"></Message>
-      <Message Importance="High" Text="TargetFrameworkVersion: $(TargetFrameworkVersion)"></Message>
+      <Message Importance="High" Text="Platform: $(Platform)"></Message>
+      <Message Importance="High" Text="TargetFramework: $(TargetFramework)"></Message>
+      <Message Importance="High" Text="RuntimeIdentifier: $(RuntimeIdentifier)"></Message>
       <Message Importance="High" Text="MSBuildRuntimeType: $(MSBuildRuntimeType)"></Message>
 
       <PropertyGroup>
-        <UseNetFxIlTools Condition="$(UseNetFxIlTools) == '' and Exists('$(TargetFrameworkSDKToolsDirectory)ildasm.exe') ">true</UseNetFxIlTools>
+        <UseNetFxIlTools Condition="$(UseNetFxIlTools) == '' and Exists('$(TargetFrameworkSDKToolsDirectory)ildasm.exe') and Exists('$(TargetFrameworkDirectory)')">true</UseNetFxIlTools>
         <UseNetFxIlTools Condition="$(UseNetFxIlTools) == ''">false</UseNetFxIlTools>
       </PropertyGroup>
+
+      <Message Importance="High" Text="UseNetFxIlTools: $(UseNetFxIlTools)"></Message>
 
       <PropertyGroup Condition="$(UseNetFxIlTools) == True">
         <ILAsmPath>"$(TargetedFrameworkDir)\ilasm" /dll /PDB /DEBUG /NOLOGO /QUIET /mdv="v2.0.50727" /res:"$(TargetDir)$(TargetName).res"</ILAsmPath>
@@ -41,11 +42,13 @@
         <ILAsmPath>"$(TargetDir)ilasm" /dll /PDB /DEBUG /NOLOGO /QUIET /mdv="v2.0.50727" "$(TargetDir)$(TargetName).res"</ILAsmPath>
         <ILDAsmPath>"$(TargetDir)ildasm" /LINENUM</ILDAsmPath>
       </PropertyGroup>
-
+      
       <PropertyGroup>
           <ILAsmArgs>/out:"$(TargetDir)$(TargetName).dll" "$(TargetDir)$(TargetName).il"</ILAsmArgs>
           <ILDAsmArgs>/out:"$(TargetDir)$(TargetName).il" "$(TargetPath)"</ILDAsmArgs>
       </PropertyGroup>
+
+      <Exec Command="dir /b $(TargetDir)"/>
 
       <Message Importance="High" Text="ILAsm: $(ILAsmPath) $(ILAsmArgs)"></Message>
       <Message Importance="High" Text="ILDAsm: $(ILDAsmPath) $(ILDAsmArgs)"></Message>
