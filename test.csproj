@@ -4,6 +4,7 @@
     <TargetFrameworks>net2.0;net4.0;net9.0</TargetFrameworks>
     <LangVersion>12.0</LangVersion>
     <OutputType>Exe</OutputType>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <NoWarn>$(NoWarn);MSB3073</NoWarn>
   </PropertyGroup>
 
@@ -19,7 +20,7 @@
     <PackageReference Include="Microsoft.NETCore.ILDAsm" Version="9.0.0-rc.1.24431.7" PrivateAssets="all" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" DependsOnTargets="Restore">
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
       <Message Importance="High" Text="TargetFrameworkSDKToolsDirectory: $(TargetFrameworkSDKToolsDirectory)"></Message>
       <Message Importance="High" Text="TargetedFrameworkDir: $(TargetedFrameworkDir)"></Message>
       <Message Importance="High" Text="Platform: $(Platform)"></Message>
@@ -28,8 +29,9 @@
       <Message Importance="High" Text="MSBuildRuntimeType: $(MSBuildRuntimeType)"></Message>
 
       <PropertyGroup>
-        <UseNetFxIlTools Condition="$(UseNetFxIlTools) != 'false' and Exists('$(TargetFrameworkSDKToolsDirectory)ildasm.exe') and Exists('$(TargetFrameworkDirectory)')">true</UseNetFxIlTools>
+        <UseNetFxIlTools Condition="$(UseNetFxIlTools) == '' and Exists('$(TargetFrameworkSDKToolsDirectory)ildasm.exe') and Exists('$(TargetFrameworkDirectory)')">true</UseNetFxIlTools>
         <UseNetFxIlTools Condition="$(UseNetFxIlTools) == ''">false</UseNetFxIlTools>
+        <UseNetFxIlTools Condition="$(UseNetFxIlTools) == 'True' and !(Exists('$(TargetFrameworkSDKToolsDirectory)ildasm.exe') and Exists('$(TargetFrameworkDirectory)'))">false</UseNetFxIlTools>
       </PropertyGroup>
 
       <Message Importance="High" Text="UseNetFxIlTools: $(UseNetFxIlTools)"></Message>
