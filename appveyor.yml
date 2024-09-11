@@ -17,12 +17,12 @@ install:
     for /d %%d in (%LOCALAPPDATA%\Microsoft\VisualStudio\17.0*) do type %%d\sdk.txt
 build_script:
 - cmd: |
-    dotnet build /tl:off -m:1 -v:m /p:UseNetFxIlTools=true
-    dotnet msbuild -restore /tl:off -m:1 -v:m /p:UseNetFxIlTools=true 
-    msbuild -restore -m:1 -v:m /p:UseNetFxIlTools=true
-    dotnet build /tl:off -m:1 -v:m /p:UseNetFxIlTools=false 
-    dotnet msbuild -restore /tl:off -m:1 -v:m /p:UseNetFxIlTools=false
-    msbuild -restore -m:1 -v:m /p:UseNetFxIlTools=false
-    dotnet build /tl:off -m:1 -v:m
+    rem dotnet build /tl:off -m:1 -v:m /p:UseNetFxIlTools=true
+    rem dotnet msbuild -restore /tl:off -m:1 -v:m /p:UseNetFxIlTools=true 
+    rem msbuild -restore -m:1 -v:m /p:UseNetFxIlTools=true
+    rem dotnet build /tl:off -m:1 -v:m /p:UseNetFxIlTools=false 
+    rem dotnet msbuild -restore /tl:off -m:1 -v:m /p:UseNetFxIlTools=false
+    rem msbuild -restore -m:1 -v:m /p:UseNetFxIlTools=false
+    rem dotnet build /tl:off -m:1 -v:m
     dotnet msbuild -restore /tl:off -m:1 -v:m
-    msbuild -restore -m:1 -v:m
+    msbuild -restore -m:1 -v:n
