@@ -4,7 +4,7 @@
     <TargetFrameworks>net2.0;net4.0;net9.0</TargetFrameworks>
     <LangVersion>12.0</LangVersion>
     <OutputType>Exe</OutputType>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <RuntimeIdentifier>win-x86</RuntimeIdentifier>
     <NoWarn>$(NoWarn);MSB3073</NoWarn>
   </PropertyGroup>
 
