@@ -20,11 +20,13 @@ build_script:
 - cmd: |
     set ARGS=-restore -tl:off -v:m -m:1 test.csproj
     msbuild %ARGS% 
+    rd /s /q obj && rd /s /q bin
     dotnet msbuild %ARGS% 
+    rd /s /q obj && rd /s /q bin
     dotnet build %ARGS%
-    msbuild %ARGS% /p:UseNetFxIlTools=true
-    dotnet msbuild %ARGS% /p:UseNetFxIlTools=true
-    dotnet build %ARGS% /p:UseNetFxIlTools=true
+    rd /s /q obj && rd /s /q bin
     msbuild %ARGS% /p:UseNetFxIlTools=false
+    rd /s /q obj && rd /s /q bin
     dotnet msbuild %ARGS% /p:UseNetFxIlTools=false
+    rd /s /q obj && rd /s /q bin
     dotnet build %ARGS% /p:UseNetFxIlTools=false
