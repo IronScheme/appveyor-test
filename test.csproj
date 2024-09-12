@@ -7,6 +7,7 @@
     <PlatformTarget>anycpu</PlatformTarget>
     <OutDir>bin/$(Configuration)/$(TargetFramework)</OutDir>
     <NoWarn>$(NoWarn);MSB3073</NoWarn>
+    <UseCurrentRuntimeIdentifier>true</UseCurrentRuntimeIdentifier>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(MSBuildRuntimeType) == 'Core'">
@@ -21,13 +22,7 @@
     <PackageReference Include="Microsoft.NETCore.ILDAsm" Version="9.0.0-rc.1.24431.7" PrivateAssets="all" />
   </ItemGroup>
 
-  <Target Name="Argh" BeforeTargets="CollectPackageReferences">
-    <PropertyGroup>
-      <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    </PropertyGroup>
-  </Target>
-
-   <Target Name="Argh2" BeforeTargets="PreBuildEvent">
+  <Target Name="ClearRID" BeforeTargets="PreBuildEvent">
     <PropertyGroup>
       <RuntimeIdentifier></RuntimeIdentifier>
     </PropertyGroup>
