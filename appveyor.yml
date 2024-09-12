@@ -8,22 +8,25 @@ configuration: Release
 install:
 - cmd: |
     cd %APPVEYOR_BUILD_FOLDER%
-    git submodule update --init --recursive
-    set SHA=%APPVEYOR_REPO_COMMIT:~0,7%
-    choco install ilmerge
-    set PATH=%PATH%;C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\;%APPVEYOR_BUILD_FOLDER%\IronScheme\tools\;
+    rem git submodule update --init --recursive
+    rem set SHA=%APPVEYOR_REPO_COMMIT:~0,7%
+    rem choco install ilmerge
+    rem set PATH=%PATH%;C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\;%APPVEYOR_BUILD_FOLDER%\IronScheme\tools\;
     choco install dotnet-9.0-sdk --pre -y -r
     for /d %%d in (%LOCALAPPDATA%\Microsoft\VisualStudio\17.0*) do echo UsePreviews=True > %%d\sdk.txt
     for /d %%d in (%LOCALAPPDATA%\Microsoft\VisualStudio\17.0*) do type %%d\sdk.txt
-    dotnet --info
+    rem dotnet --info
 build_script:
 - cmd: |
-    rem dotnet build /tl:off -m:1 -v:m /p:UseNetFxIlTools=true
-    rem dotnet msbuild -restore /tl:off -m:1 -v:m /p:UseNetFxIlTools=true 
-    rem msbuild -restore -m:1 -v:m /p:UseNetFxIlTools=true
-    rem dotnet build /tl:off -m:1 -v:m /p:UseNetFxIlTools=false 
-    rem dotnet msbuild -restore /tl:off -m:1 -v:m /p:UseNetFxIlTools=false
-    rem msbuild -restore -m:1 -v:m /p:UseNetFxIlTools=false
-    rem dotnet build /tl:off -m:1 -v:m
-    dotnet msbuild -restore /tl:off -m:1 -v:m
-    msbuild -restore -m:1 -v:n
+    set ARGS=-restore -tl:off -v:m -m:1 test.csproj
+    rd /s /q obj
+    rd /s /q bin
+    msbuild %ARGS% 
+    dotnet msbuild %ARGS% 
+    dotnet build %ARGS%
+    msbuild %ARGS% /p:UseNetFxIlTools=true
+    dotnet msbuild %ARGS% /p:UseNetFxIlTools=true
+    dotnet build %ARGS% /p:UseNetFxIlTools=true
+    msbuild %ARGS% /p:UseNetFxIlTools=false
+    dotnet msbuild %ARGS% /p:UseNetFxIlTools=false
+    dotnet build %ARGS% /p:UseNetFxIlTools=false
