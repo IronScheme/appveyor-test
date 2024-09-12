@@ -43,25 +43,28 @@
         <UseNetFxIlTools Condition="$(UseNetFxIlTools) == '' and Exists('$(TargetFrameworkSDKToolsDirectory)ildasm.exe') and Exists('$(TargetFrameworkDirectory)')">true</UseNetFxIlTools>
         <UseNetFxIlTools Condition="$(UseNetFxIlTools) == ''">false</UseNetFxIlTools>
         <UseNetFxIlTools Condition="$(UseNetFxIlTools) == 'True' and !(Exists('$(TargetFrameworkSDKToolsDirectory)ildasm.exe') and Exists('$(TargetFrameworkDirectory)'))">false</UseNetFxIlTools>
+        <TargetedRuntimeVersion Condition="$(TargetedRuntimeVersion) == '' or $(TargetedRuntimeVersion) == 'v'">v4.0.30319</TargetedRuntimeVersion>
       </PropertyGroup>
 
       <Message Importance="High" Text="UseNetFxIlTools: $(UseNetFxIlTools)"></Message>
+      <Message Importance="High" Text="TargetedRuntimeVersion: $(TargetedRuntimeVersion)"></Message>
 
       <PropertyGroup Condition="$(UseNetFxIlTools) == True">
-        <ILAsmPath>"$(TargetedFrameworkDir)\ilasm" /dll /PDB /DEBUG /NOLOGO /QUIET /mdv="v2.0.50727" /res:"$(TargetDir)$(TargetName).res"</ILAsmPath>
+        <ILAsmPath>"$(TargetedFrameworkDir)\ilasm" /dll /PDB /DEBUG /NOLOGO /QUIET /mdv="$(TargetedRuntimeVersion)" /res:"$(TargetDir)$(TargetName).res"</ILAsmPath>
         <ILDAsmPath>"$(TargetFrameworkSDKToolsDirectory)ildasm" /NOBAR /LINENUM</ILDAsmPath>
       </PropertyGroup>
       <PropertyGroup Condition="$(UseNetFxIlTools) != True">
-        <ILAsmPath>"$(TargetDir)ilasm" /dll /PDB /DEBUG /NOLOGO /QUIET /mdv="v2.0.50727" "$(TargetDir)$(TargetName).res"</ILAsmPath>
+        <ILAsmPath>"$(TargetDir)ilasm" /dll /PDB /DEBUG /NOLOGO /QUIET /mdv="$(TargetedRuntimeVersion)" "$(TargetDir)$(TargetName).res"</ILAsmPath>
         <ILDAsmPath>"$(TargetDir)ildasm" /LINENUM</ILDAsmPath>
       </PropertyGroup>
       
       <PropertyGroup>
-          <ILAsmArgs>/out:"$(TargetDir)$(TargetName).dll" "$(TargetDir)$(TargetName).il"</ILAsmArgs>
-          <ILDAsmArgs>/out:"$(TargetDir)$(TargetName).il" "$(TargetPath)"</ILDAsmArgs>
+        <ILAsmArgs>/out:"$(TargetPath)" "$(TargetDir)$(TargetName).il"</ILAsmArgs>
+        <ILDAsmArgs>/out:"$(TargetDir)$(TargetName).il" "$(TargetPath)"</ILDAsmArgs>
       </PropertyGroup>
 
       <Exec Command="dir /b $(TargetDir)"/>
+      <Exec Command="copy $(TargetPath) $(TargetDir)$(TargetName)2.dll"/>
 
       <Message Importance="High" Text="ILAsm: $(ILAsmPath) $(ILAsmArgs)"></Message>
       <Message Importance="High" Text="ILDAsm: $(ILDAsmPath) $(ILDAsmArgs)"></Message>
@@ -69,6 +72,13 @@
       <Exec Command="$(ILDAsmPath) $(ILDAsmArgs)"/>
       <Exec Condition="$(UseNetFxIlTools) == True" ContinueOnError="true" Command="$(ILAsmPath) $(ILAsmArgs)" />
       <Exec Command="$(ILAsmPath) $(ILAsmArgs)" />
+
+      <PropertyGroup>
+        <ILDAsmArgs>/out:"$(TargetDir)$(TargetName)2.il" "$(TargetPath)"</ILDAsmArgs>
+      </PropertyGroup>
+
+      <Exec Command="$(ILDAsmPath) $(ILDAsmArgs)"/>
+
   </Target>
 
 </Project>
