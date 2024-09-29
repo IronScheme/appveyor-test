@@ -12,7 +12,8 @@ install:
     rem set SHA=%APPVEYOR_REPO_COMMIT:~0,7%
     rem choco install ilmerge
     rem set PATH=%PATH%;C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\;%APPVEYOR_BUILD_FOLDER%\IronScheme\tools\;
-    choco install dotnet-9.0-sdk --pre -y -r
+    where nunit3-console
+    rem choco install dotnet-9.0-sdk --pre -y -r
     for /d %%d in (%LOCALAPPDATA%\Microsoft\VisualStudio\17.0*) do echo UsePreviews=True > %%d\sdk.txt
     for /d %%d in (%LOCALAPPDATA%\Microsoft\VisualStudio\17.0*) do type %%d\sdk.txt
     rem dotnet --info
